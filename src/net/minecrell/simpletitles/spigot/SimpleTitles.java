@@ -131,6 +131,8 @@ public class SimpleTitles extends JavaPlugin {
             start++;
         }
 
+        sendPacket(player, new PacketTitle(Action.RESET));
+
         Integer fadeIn = null, stay = null, fadeOut = null;
         if (end - start >= 3) {
             for (int i = 1; i <= 3; i++) {
@@ -160,7 +162,6 @@ public class SimpleTitles extends JavaPlugin {
         String input = MESSAGE_JOINER.join(Arrays.copyOfRange(args, start, end));
         Matcher matcher = MESSAGE_PATTERN.matcher(input);
         if (matcher.find()) {
-            sendPacket(player, new PacketTitle(Action.RESET));
             sendPacket(player, new PacketTitle(Action.TITLE,
                     new ChatComponentText(ChatColor.translateAlternateColorCodes('&', matcher.group(1)))));
 
@@ -169,8 +170,6 @@ public class SimpleTitles extends JavaPlugin {
                         new ChatComponentText(ChatColor.translateAlternateColorCodes('&', matcher.group(1)))));
             }
         }
-
-
 
         return true;
     }

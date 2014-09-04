@@ -11,5 +11,5 @@ commands:
   simpletitle:
     description: 'Create titles using a simple command.'
     aliases: [stitle]
-    usage: "\u00A7cUsage: /<command> [player/@a] ["title"] ["subtitle"] [fadeIn stay fadeOut]"
+    usage: "\u00A7cUsage: /<command> [player/@a] [\"title\"] [\"subtitle\"] [fadeIn stay fadeOut]"
     permission: simpletitles.use

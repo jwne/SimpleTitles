@@ -1,7 +1,7 @@
 main: net.minecrell.simpletitles.spigot.SimpleTitles
 name: SimpleTitles
 description: 'Create titles using simple in-game commands!'
-version: '0.1-SNAPSHOT'
+version: '0.1'
 
 author: 'Minecrell <https://github.com/Minecrell>'
 

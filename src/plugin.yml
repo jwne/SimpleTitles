@@ -1,0 +1,15 @@
+main: net.minecrell.simpletitles.spigot.SimpleTitles
+name: SimpleTitles
+description: 'Create titles using simple in-game commands!'
+version: '0.1-SNAPSHOT'
+
+author: 'Minecrell <https://github.com/Minecrell>'
+
+commands:
+  title:
+    permission: simpletitles.use
+  simpletitle:
+    description: 'Create titles using a simple command.'
+    aliases: [stitle]
+    usage: "\u00A7cUsage: /<command> [player/@a] ["title"] ["subtitle"] [fadeIn stay fadeOut]"
+    permission: simpletitles.use

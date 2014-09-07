@@ -26,9 +26,7 @@ public final class Messages {
     }
 
     private static IChatBaseComponent getUsage(String translation, Object... args) {
-        IChatBaseComponent message = getError("commands.generic.usage");
-        message.addSibling(getTranslated(translation, args));
-        return message;
+        return getError("commands.generic.usage", getTranslated(translation, args));
     }
 
     public static void sendTranslated(CommandSender sender, String translation, Object... args) {

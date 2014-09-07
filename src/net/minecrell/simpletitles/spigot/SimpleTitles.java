@@ -58,8 +58,10 @@ public class SimpleTitles extends JavaPlugin {
             }
         }
 
-        Action action = Action.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-        if (action == null) {
+        Action action;
+        try {
+            action = Action.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+        } catch (IllegalArgumentException e) {
             Messages.sendUsage(sender, "commands.title.usage");
             return;
         }

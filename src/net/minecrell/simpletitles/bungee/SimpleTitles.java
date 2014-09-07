@@ -1,7 +1,6 @@
 package net.minecrell.simpletitles.bungee;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,14 +30,6 @@ public class SimpleTitles extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new SimpleCommand());
     }
 
-    private static enum TitleAction {
-        TITLE,
-        SUBTITLE,
-        TIMES,
-        CLEAR,
-        RESET
-    }
-
     public class VanillaCommand extends Command {
         public VanillaCommand() {
             super("gtitle", "simpletitles.use");
@@ -61,53 +52,46 @@ public class SimpleTitles extends Plugin {
                 }
             }
 
-            TitleAction action = TitleAction.valueOf(args[1].toUpperCase(Locale.ENGLISH));
-            if (action == null) {
+            String action = args[1];
+            Title title = getProxy().createTitle();
+
+            if (action.equalsIgnoreCase("title") || action.equalsIgnoreCase("subtitle")) {
+                if (args.length == 2) {
+                    sender.sendMessage(Messages.getUsage("commands.title.usage.title"));
+                    return;
+                }
+
+                BaseComponent[] text;
+                try {
+                    text = ComponentSerializer.parse(args[2]);
+                } catch (Exception e) {
+                    sender.sendMessage(Messages.getError("commands.generic.parameter.invalid", args[2]));
+                    getLogger().log(Level.WARNING, "Unable to parse JSON from command: " + args[2], e);
+                    return;
+                }
+
+                if (action.equalsIgnoreCase("title"))
+                    title.title(text);
+                else title.subTitle(text);
+            } else if (action.equalsIgnoreCase("times")) {
+                if (args.length < 5) {
+                    sender.sendMessage(Messages.getUsage("commands.title.usage.times"));
+                    return;
+                }
+
+                Integer fadeIn, stay, fadeOut;
+                if ((fadeIn = parseTimeVanilla(sender, args[2])) == null) return;
+                if ((stay = parseTimeVanilla(sender, args[3])) == null) return;
+                if ((fadeOut = parseTimeVanilla(sender, args[4])) == null) return;
+
+                title.fadeIn(fadeIn).stay(stay).fadeOut(fadeOut);
+            } else if (action.equalsIgnoreCase("clear")) {
+                title.clear();
+            } else if (action.equalsIgnoreCase("reset")) {
+                title.reset();
+            } else {
                 sender.sendMessage(Messages.getUsage("commands.title.usage"));
                 return;
-            }
-
-            Title title = getProxy().createTitle();
-            switch (action) {
-                case TITLE:
-                case SUBTITLE:
-                    if (args.length == 2) {
-                        sender.sendMessage(Messages.getUsage("commands.title.usage.title"));
-                        return;
-                    }
-
-                    BaseComponent[] text;
-                    try {
-                        text = ComponentSerializer.parse(args[2]);
-                    } catch (Exception e) {
-                        sender.sendMessage(Messages.getError("commands.generic.parameter.invalid", args[2]));
-                        getLogger().log(Level.WARNING, "Unable to parse JSON from command: " + args[2], e);
-                        return;
-                    }
-
-                    if (action == TitleAction.TITLE)
-                        title.title(text);
-                    else title.subTitle(text);
-                    break;
-                case TIMES:
-                    if (args.length < 5) {
-                        sender.sendMessage(Messages.getUsage("commands.title.usage.times"));
-                        return;
-                    }
-
-                    Integer fadeIn, stay, fadeOut;
-                    if ((fadeIn = parseTimeVanilla(sender, args[2])) == null) return;
-                    if ((stay = parseTimeVanilla(sender, args[3])) == null) return;
-                    if ((fadeOut = parseTimeVanilla(sender, args[4])) == null) return;
-
-                    title.fadeIn(fadeIn).stay(stay).fadeOut(fadeOut);
-                    break;
-                case CLEAR:
-                    title.clear();
-                    break;
-                case RESET:
-                    title.reset();
-                    break;
             }
 
             sendTitle(player, title);

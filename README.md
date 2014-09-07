@@ -2,10 +2,12 @@
 
 SimpleTitles adds 2 new commands to your server allowing you to send the new titles introduced in Minecraft 1.8 to your players easily! You can create titles using the `/title` command like in Vanilla and there is also a simpler command allowing you to create them with only one command.
 
+The plugin works on both Spigot and BungeeCord servers. For Spigot you need at least build #1647 and for BungeeCord you need at least build #996.
+
 ## Commands
 The permission for all commands is `simpletitles.use`.
 
-1.  `/title` - This plugin works like in Vanilla, has the same messages and everything else is the same. There is an explanation how to use this command in the [Minecraft Wiki](http://minecraft.gamepedia.com/Commands#title).
+1.  `/title` (`/gtitle` for BungeeCord) - This plugin works like in Vanilla, has the same messages and everything else is the same. There is an explanation how to use this command in the [Minecraft Wiki](http://minecraft.gamepedia.com/Commands#title).
 2.  `/stitle` - This command is actually the simpler one. It supports color codes and you don't need to send multiple commands just for a simple title! Here are the arguments for the command:
 
     1.  _Optional_: The player name if you want to send it to one player only.
